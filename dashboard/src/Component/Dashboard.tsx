@@ -13,7 +13,7 @@ const Dashboard: React.FC = () => {
     datasets: [
       {
         label: 'Compliance Metrics',
-        data: [0, 0, 0], // Initial placeholder data
+        data: [0, 0, 0], 
         backgroundColor: ['#4caf50', '#3e95cd', '#ff6384'],
         hoverBackgroundColor: ['#388e3c', '#2e7d32', '#d32f2f'],
       },
@@ -33,9 +33,9 @@ const Dashboard: React.FC = () => {
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
-  const [showMetrics, setShowMetrics] = useState(false);  // State to toggle visibility
+  const [showMetrics, setShowMetrics] = useState(false);  
 
-  // Fetch data from backend
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -45,7 +45,7 @@ const Dashboard: React.FC = () => {
         }
         const result = await response.json();
 
-        // Set the fetched data
+
         setData({
           labels: ['Compliance Score', 'Controls Implemented', 'Pending Tasks'],
           datasets: [
@@ -71,9 +71,8 @@ const Dashboard: React.FC = () => {
     fetchData();
   }, []);
 
-  // Update data function
   const updateData = async () => {
-    setLoading(true); // Set loading to true while fetching new data
+    setLoading(true); 
     try {
       const response = await fetch('http://localhost:3000/api/compliance');
       if (!response.ok) {
@@ -81,7 +80,7 @@ const Dashboard: React.FC = () => {
       }
       const result = await response.json();
 
-      // Update with the new fetched data
+
       setData({
         labels: ['Compliance Score', 'Controls Implemented', 'Pending Tasks'],
         datasets: [
@@ -96,9 +95,9 @@ const Dashboard: React.FC = () => {
 
       setRiskAssessment(result.riskAssessment);
       setSecurityMetrics(result.securityMetrics);
-      setShowMetrics(true);  // Show the metrics after updating
+      setShowMetrics(true);  
 
-      setLoading(false); // Set loading to false after data is fetched
+      setLoading(false);
     } catch (err) {
       setError(err as Error);
       setLoading(false);

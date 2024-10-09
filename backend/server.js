@@ -22,11 +22,11 @@ const generateComplianceMetrics = () => {
     ],
     riskAssessment: {
       criticalRisks: getRandomInt(0, 5),
-      riskScore: ['Low', 'Medium', 'High'][getRandomInt(0, 2)], // Randomly select risk score
+      riskScore: ['Low', 'Medium', 'High'][getRandomInt(0, 2)], 
     },
     securityMetrics: {
       incidents: getRandomInt(0, 10),
-      avgResolutionTime: `${getRandomInt(1, 5)} hours`, // Random number of hours for resolution time
+      avgResolutionTime: `${getRandomInt(1, 5)} hours`, 
       trends: {
         lastMonth: getRandomInt(0, 10),
         thisMonth: getRandomInt(0, 10),

@@ -4,7 +4,7 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: #f4f4f9;  /* Softer background */
+  background-color: #f4f4f9; 
   padding: 20px;
 }
 
@@ -89,17 +89,17 @@ h1 {
 /* Features Section */
 .features {
   display: flex;
-  flex-wrap: wrap; /* Ensures items wrap to the next line if they overflow */
-  justify-content: space-between; /* Distribute items with space between them */
-  gap: 20px; /* Add space between the items */
+  flex-wrap: wrap;
+  justify-content: space-between; 
+  gap: 20px; 
   width: 100%;
   max-width: 800px;
   margin: 20px 0;
 }
 
 .feature {
-  flex: 1 1 calc(50% - 20px); /* Make each item take up half the width, minus the gap */
-  background-color: white;  /* Solid background for cards */
+  flex: 1 1 calc(50% - 20px);
+  background-color: white;  
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 15px;
   padding: 20px;
