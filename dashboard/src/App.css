@@ -60,7 +60,7 @@ h1 {
 /* Chart Container */
 .chart-container {
   width: 100%;
-  max-width: 800px;
+  max-width: 760px;
   height: 400px;
   background-color: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -89,21 +89,22 @@ h1 {
 
 /* Features Section */
 .features {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 2 columns */
-  gap: 20px;
+  display: flex;
+  flex-wrap: wrap; /* Ensures items wrap to the next line if they overflow */
+  justify-content: space-between; /* Distribute items with space between them */
+  gap: 20px; /* Add space between the items */
   width: 100%;
   max-width: 800px;
   margin: 20px 0;
 }
 
 .feature {
+  flex: 1 1 calc(50% - 20px); /* Make each item take up half the width, minus the gap */
   background-color: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 15px;
   padding: 20px;
   margin-bottom: 20px;
-  width: 100%;
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
@@ -111,7 +112,6 @@ h1 {
   transform: translateY(-5px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
-
 .feature h2 {
   font-size: 1.5rem;
   color: #333;
