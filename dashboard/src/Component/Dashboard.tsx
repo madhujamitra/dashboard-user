@@ -33,6 +33,7 @@ const Dashboard: React.FC = () => {
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
+  const [showMetrics, setShowMetrics] = useState(false);  // State to toggle visibility
 
   // Fetch data from backend
   useEffect(() => {
@@ -71,18 +72,37 @@ const Dashboard: React.FC = () => {
   }, []);
 
   // Update data function
-  const updateData = () => {
-    setData({
-      labels: ['Compliance Score', 'Tasks Completed', 'Pending Tasks'],
-      datasets: [
-        {
-          label: 'Updated Compliance Metrics',
-          data: [85, 65, 10],
-          backgroundColor: ['#4caf50', '#3e95cd', '#ff6384'],
-          hoverBackgroundColor: ['#388e3c', '#2e7d32', '#d32f2f'],
-        },
-      ],
-    });
+  const updateData = async () => {
+    setLoading(true); // Set loading to true while fetching new data
+    try {
+      const response = await fetch('http://localhost:3000/api/compliance');
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const result = await response.json();
+
+      // Update with the new fetched data
+      setData({
+        labels: ['Compliance Score', 'Controls Implemented', 'Pending Tasks'],
+        datasets: [
+          {
+            label: 'Updated Compliance Metrics',
+            data: [result.complianceScore, result.controlsImplemented, result.pendingTasks],
+            backgroundColor: ['#4caf50', '#3e95cd', '#ff6384'],
+            hoverBackgroundColor: ['#388e3c', '#2e7d32', '#d32f2f'],
+          },
+        ],
+      });
+
+      setRiskAssessment(result.riskAssessment);
+      setSecurityMetrics(result.securityMetrics);
+      setShowMetrics(true);  // Show the metrics after updating
+
+      setLoading(false); // Set loading to false after data is fetched
+    } catch (err) {
+      setError(err as Error);
+      setLoading(false);
+    }
   };
 
   if (loading) {
@@ -97,10 +117,10 @@ const Dashboard: React.FC = () => {
     <>
       {/* Navbar with user icon */}
       <nav className="navbar">
-        <img src={Icon} alt="Logo" className="dashboard-logo" />
+        <img src={Icon} alt="Logo" className="dashboard-logo" aria-label="Company Logo" />
         <div className="navbar-right">
           <h1>Compliance Dashboard</h1>
-          <FontAwesomeIcon icon={faUser} className="user-icon" />
+          <FontAwesomeIcon icon={faUser} className="user-icon" aria-label="User Icon" />
         </div>
       </nav>
       
@@ -108,36 +128,39 @@ const Dashboard: React.FC = () => {
         <div className="dashboard-card">
 
           {/* Chart Section */}
+          <h2 className="chart-heading">Compliance Metrics Overview</h2>
           <div className="chart-container">
             <Bar data={data} options={{ responsive: true, maintainAspectRatio: false }} />
           </div>
 
-          {/* Dashboard Features */}
-          <section className="features">
-            <div className="feature">
-              <h2>Compliance Status Overview</h2>
-              <p>Compliance Score: {data.datasets[0].data[0]}%</p>
-              <p>Controls Implemented: {data.datasets[0].data[1]}</p>
-              <p>Pending Tasks: {data.datasets[0].data[2]}</p>
-            </div>
+          {/* Conditionally display the metrics */}
+          {showMetrics && (
+            <section className="features">
+              <div className="feature" aria-label="Compliance Status Overview">
+                <h2>Compliance Status Overview</h2>
+                <p>Compliance Score: {data.datasets[0].data[0]}%</p>
+                <p>Controls Implemented: {data.datasets[0].data[1]}</p>
+                <p>Pending Tasks: {data.datasets[0].data[2]}</p>
+              </div>
 
-            <div className="feature">
-              <h2>Risk Assessment</h2>
-              <p>Critical Risks: {riskAssessment.criticalRisks}</p>
-              <p>Risk Score: {riskAssessment.riskScore}</p>
-            </div>
+              <div className="feature" aria-label="Risk Assessment">
+                <h2>Risk Assessment</h2>
+                <p>Critical Risks: {riskAssessment.criticalRisks}</p>
+                <p>Risk Score: {riskAssessment.riskScore}</p>
+              </div>
 
-            <div className="feature">
-              <h2>Security Metrics</h2>
-              <p>Incidents: {securityMetrics.incidents}</p>
-              <p>Average Resolution Time: {securityMetrics.avgResolutionTime}</p>
-              <p>Incident Trends - Last Month: {securityMetrics.trends.lastMonth}, This Month: {securityMetrics.trends.thisMonth}</p>
-            </div>
-          </section>
+              <div className="feature" aria-label="Security Metrics">
+                <h2>Security Metrics</h2>
+                <p>Incidents: {securityMetrics.incidents}</p>
+                <p>Average Resolution Time: {securityMetrics.avgResolutionTime}</p>
+                <p>Incident Trends - Last Month: {securityMetrics.trends.lastMonth}, This Month: {securityMetrics.trends.thisMonth}</p>
+              </div>
+            </section>
+          )}
 
           {/* Button for Interaction */}
-          <button className="update-btn" onClick={updateData}>
-            Update Metrics
+          <button className="update-btn" onClick={updateData} aria-label="Update Compliance Metrics">
+            {showMetrics ? 'Update Metrics' : 'Show Metrics'}
           </button>
         </div>
       </div>

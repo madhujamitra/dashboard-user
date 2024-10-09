@@ -27,10 +27,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   padding: 20px;
   background-color: #ffffff;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0.1, 0.1, 0.1, 0.1);
   border-radius: 15px;
 }
 
@@ -100,7 +99,7 @@ h1 {
 
 .feature {
   flex: 1 1 calc(50% - 20px); /* Make each item take up half the width, minus the gap */
-  background-color: white;
+  background-color: white;  /* Solid background for cards */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 15px;
   padding: 20px;
@@ -112,6 +111,7 @@ h1 {
   transform: translateY(-5px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
+
 .feature h2 {
   font-size: 1.5rem;
   color: #333;
