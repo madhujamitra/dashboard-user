@@ -3,7 +3,7 @@ import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
-import Icon from '../assets/icon.svg'; // Adjust path to your SVG file
+import Icon from '../assets/icon.svg'; 
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -13,20 +13,20 @@ const Dashboard: React.FC = () => {
     datasets: [
       {
         label: 'Compliance Metrics',
-        data: [75, 50, 25], // Mock data
+        data: [75, 50, 25],
         backgroundColor: ['#4caf50', '#3e95cd', '#ff6384'],
       },
     ],
   });
 
-  // Example of interactivity: Changing data on button click
+
   const updateData = () => {
     setData({
       labels: ['Compliance Score', 'Tasks Completed', 'Pending Tasks'],
       datasets: [
         {
           label: 'Updated Compliance Metrics',
-          data: [85, 65, 10], // New mock data
+          data: [85, 65, 10], 
           backgroundColor: ['#4caf50', '#3e95cd', '#ff6384'],
         },
       ],

@@ -22,10 +22,11 @@
 .navbar-right {
   display: flex;
   align-items: center;
+  padding-right: 20px;
 }
 
 .user-icon {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   margin-left: 20px;
   color: #333;
 }
@@ -34,6 +35,7 @@
 .dashboard-logo {
   width: 100px;
   height: auto;
+  padding-left: 20px;
 }
 
 /* Title Styling */
