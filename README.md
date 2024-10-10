@@ -79,3 +79,9 @@ Before you begin, ensure you have the following installed:
 - **Responsiveness**: The layout automatically adjusts for different screen sizes, ensuring a great user experience on desktops, tablets, and mobile devices.
 
 
+## IMAGES
+
+![Alt text](dashboard/src/assets/Screenshot 2024-10-10 at 3.15.13 PM.png)
+
+![Alt text](dashboard/src/assets/Screenshot 2024-10-10 at 3.14.58 PM.png)
+
