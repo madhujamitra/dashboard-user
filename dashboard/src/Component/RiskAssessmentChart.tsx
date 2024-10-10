@@ -38,7 +38,13 @@ const RiskAssessmentChart: React.FC<RiskAssessmentChartProps> = ({ data }) => {
     },
   };
 
-  return <Pie data={chartData} options={options} />;
+  return (
+    <div style={{ width: '300px', height: '300px' }}> 
+      <Pie data={chartData} options={options} />
+    </div>
+  )
+  
+
 };
 
 export default RiskAssessmentChart;

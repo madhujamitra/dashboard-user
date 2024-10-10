@@ -46,7 +46,11 @@ const SecurityMetricsChart: React.FC<SecurityMetricsChartProps> = ({ data }) => 
     },
   };
 
-  return <Line data={chartData} options={options} />;
+  return (
+    <div style={{ width: '300px', height: '300px' }}> 
+ <Line data={chartData} options={options} />
+    </div>
+ )
 };
 
 export default SecurityMetricsChart;

@@ -7,7 +7,6 @@ import { faUser } from '@fortawesome/free-solid-svg-icons';
 import Icon from '../assets/icon.svg';
 import Content from './Content';
 
-
 interface DashboardData {
   complianceScore: number;
   controlsImplemented: number;
@@ -34,7 +33,7 @@ const Dashboard: React.FC = () => {
       try {
         const response = await fetch('http://localhost:3000/api/compliance');
         if (!response.ok) throw new Error('Network response was not ok');
-  
+
         const result: DashboardData = await response.json();
         setDashboardData(result);
         setLoading(false);
@@ -43,10 +42,10 @@ const Dashboard: React.FC = () => {
         setLoading(false);
       }
     };
-  
+
     fetchData();
   }, []);
-  
+
   if (loading) return <div className="loading">Loading...</div>;
   if (error) return <div className="error">Error: {error.message}</div>;
   if (!dashboardData) return <div className="no-data">No data available</div>;
@@ -60,13 +59,14 @@ const Dashboard: React.FC = () => {
           <FontAwesomeIcon icon={faUser} className="user-icon" aria-label="User profile" />
         </div>
       </nav>
-      
+
       <main className="dashboard">
         <section className="dashboard-card">
           <h2>Compliance Status Overview</h2>
           <div className="chart-container">
             <ComplianceStatusChart data={[dashboardData.complianceScore, dashboardData.controlsImplemented, dashboardData.pendingTasks]} />
           </div>
+
         </section>
 
         <section className="dashboard-card">
@@ -82,16 +82,16 @@ const Dashboard: React.FC = () => {
             <SecurityMetricsChart data={dashboardData.securityMetrics} />
           </div>
         </section>
-
-        <div className="dashboard-card">
-        <section className="content-section">
+        <section className="dashboard-card">
+          <div >
             <Content title="Develop" description="Lorem ipsum dolor sit amet, consectetur adipiscing elit." />
-          </section>
+          </div>
 
-          <section className="content-section">
+          <div >
             <Content title="Analysis" description="Lorem ipsum dolor sit amet, consectetur adipiscing elit." />
-          </section>
-        </div>
+          </div>
+        </section>
+
       </main>
     </div>
   );
