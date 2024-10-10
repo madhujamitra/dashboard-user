@@ -18,8 +18,8 @@ const RiskAssessmentChart: React.FC<RiskAssessmentChartProps> = ({ data }) => {
       {
         label: 'Risk Assessment',
         data: [data.criticalRisks, data.nonCriticalRisks],
-        backgroundColor: ['#ff6384', '#36a2eb'],
-        hoverBackgroundColor: ['#d32f2f', '#1976d2'],
+        backgroundColor: ['#274653', '#80CBC4'], 
+        hoverBackgroundColor: ['#5097a7', '#274653'], 
       },
     ],
   };
@@ -29,22 +29,23 @@ const RiskAssessmentChart: React.FC<RiskAssessmentChartProps> = ({ data }) => {
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        position: 'top' as const,
+        position: 'bottom' as const,
+        labels: {
+          color: '#274653', 
+        },
       },
       title: {
         display: true,
-        text: 'Risk Assessment',
+        label:""
       },
     },
   };
 
   return (
-    <div style={{ width: '300px', height: '300px' }}> 
+    <div style={{ width: '300px', height: '260px' }}> 
       <Pie data={chartData} options={options} />
     </div>
-  )
-  
-
+  );
 };
 
 export default RiskAssessmentChart;

@@ -1,4 +1,10 @@
-/* Main Dashboard Container */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 .dashboard {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); 
@@ -6,13 +12,11 @@
   justify-items: center;
 }
 
-/* Dashboard Card */
 .dashboard-card {
   width: 100%;
   max-width: 400px;
   padding: 20px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  border-radius: 15px;
+  border: 1px solid #274653;
   display: flex;
   flex-direction: column;
   margin-bottom: 50px;
@@ -21,15 +25,12 @@
   align-items: center;
 }
 
-/* Chart Container */
-/* .chart-container {
-  width: 100%;
-  height: 300px; 
- 
-  padding: 20px;
-} */
+body, h1, h2, h3, h4, p, a, li, label {
+  color: #274653;
+  font-weight: 700;
+  font-family: 'Georgia', serif;
+}
 
-/* Navbar Styling */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -50,23 +51,21 @@
 .user-icon {
   font-size: 1.5rem;
   margin-left: 20px;
-  color: #274653; /* Using the primary dark blue color */
+  color: #274653;
 }
 
 h1 {
   font-size: 1.2rem;
-  color: #274653; /* Primary color */
+  color: #274653;
   font-weight: 700;
-  font-family: 'Georgia', serif; /* Adjusted to a serif font */
+  font-family: 'Georgia', serif;
 }
 
-/* Logo Styling */
 .dashboard-logo {
   width: 100px;
   height: auto;
 }
 
-/* Content Section */
 .content-section {
   width: 100%;
   max-width: 400px;
@@ -74,4 +73,51 @@ h1 {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   padding: 20px;
+}
+
+button, .update-btn {
+  padding: 12px 24px;
+  font-size: 1rem;
+  background-color: #274653;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  font-family: 'Poppins', sans-serif;
+  font-weight: normal;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+button:hover, .update-btn:hover {
+  background-color: #1d3541;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+.content-box {
+  display: flex;
+  align-items: center;
+  background-color: #f0f0f0;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  margin: 20px;
+}
+
+.content-icon {
+  font-size: 2rem;
+  color: #274653;
+  margin-right: 15px;
+}
+
+.content-box h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #274653;
+  margin: 0;
+}
+
+.content-box p {
+  font-size: .8rem;
+  color: #666666;
 }

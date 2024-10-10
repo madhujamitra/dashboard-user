@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 
@@ -9,17 +9,45 @@ interface ComplianceStatusChartProps {
 }
 
 const ComplianceStatusChart: React.FC<ComplianceStatusChartProps> = ({ data }) => {
+  const chartRef = useRef<any>(null); 
+
   const chartData = {
     labels: ['Compliance Score', 'Controls Implemented', 'Pending Tasks'],
     datasets: [
       {
         label: 'Compliance Metrics',
         data: data,
-        backgroundColor: ['#4caf50', '#3e95cd', '#ff6384'],
-        hoverBackgroundColor: ['#388e3c', '#2e7d32', '#d32f2f'],
+        backgroundColor: ['#4DB6AC', '#5097a7', '#80CBC4'], 
+        hoverBackgroundColor: ['#4DB6AC', '#5097a7', '#80CBC4'], 
       },
     ],
   };
+
+  useEffect(() => {
+    const chart = chartRef.current;
+
+    if (chart) {
+      const ctx = chart.ctx;
+
+      // Create a gradient for the bars
+      const gradient1 = ctx.createLinearGradient(0, 0, 0, 300);
+      gradient1.addColorStop(0, '#4DB6AC');
+      gradient1.addColorStop(1, '#274653');
+
+      const gradient2 = ctx.createLinearGradient(0, 0, 0, 300);
+      gradient2.addColorStop(0, '#5097a7');
+      gradient2.addColorStop(1, '#3c6371');
+
+      const gradient3 = ctx.createLinearGradient(0, 0, 0, 300);
+      gradient3.addColorStop(0, '#80CBC4');
+      gradient3.addColorStop(1, '#5097a7');
+
+   
+      chart.data.datasets[0].backgroundColor = [gradient1, gradient2, gradient3];
+
+      chart.update();
+    }
+  }, [data]);
 
   const options = {
     responsive: true,
@@ -30,17 +58,34 @@ const ComplianceStatusChart: React.FC<ComplianceStatusChartProps> = ({ data }) =
       },
       title: {
         display: true,
-        text: 'Compliance Status Overview',
+        label: 'Compliance Status Overview',
+        color: '#274653', 
+        font: {
+          size: 18,
+          weight: 'bold' as const, 
+        },
+      },
+    },
+    scales: {
+      x: {
+        ticks: {
+          color: '#274653', 
+        },
+      },
+      y: {
+        beginAtZero: true,
+        ticks: {
+          color: '#274653',
+        },
       },
     },
   };
 
   return (
-    <div style={{ width: '300px', height: '300px' }}> 
-      <Bar data={chartData} options={options} />
-  </div>
-  )
-
+    <div style={{ width: '350px', height: '300px' }}>
+      <Bar ref={chartRef} data={chartData} options={options} />
+    </div>
+  );
 };
 
 export default ComplianceStatusChart;
