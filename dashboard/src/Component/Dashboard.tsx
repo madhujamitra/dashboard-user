@@ -1,169 +1,99 @@
 import React, { useState, useEffect } from 'react';
-import { Bar } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+import ComplianceStatusChart from './ComplianceStatusChart';
+import RiskAssessmentChart from './RiskAssessmentChart';
+import SecurityMetricsChart from './SecurityMetricsChart';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import Icon from '../assets/icon.svg';
+import Content from './Content';
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+
+interface DashboardData {
+  complianceScore: number;
+  controlsImplemented: number;
+  pendingTasks: number;
+  riskAssessment: {
+    criticalRisks: number;
+    nonCriticalRisks: number;
+  };
+  securityMetrics: {
+    trends: {
+      lastMonth: number;
+      thisMonth: number;
+    };
+  };
+}
 
 const Dashboard: React.FC = () => {
-  const [data, setData] = useState({
-    labels: ['Compliance Score', 'Tasks Completed', 'Pending Tasks'],
-    datasets: [
-      {
-        label: 'Compliance Metrics',
-        data: [0, 0, 0], 
-        backgroundColor: ['#4caf50', '#3e95cd', '#ff6384'],
-        hoverBackgroundColor: ['#388e3c', '#2e7d32', '#d32f2f'],
-      },
-    ],
-  });
-
-  const [riskAssessment, setRiskAssessment] = useState({
-    criticalRisks: 0,
-    riskScore: '',
-  });
-
-  const [securityMetrics, setSecurityMetrics] = useState({
-    incidents: 0,
-    avgResolutionTime: '',
-    trends: { lastMonth: 0, thisMonth: 0 },
-  });
-
+  const [dashboardData, setDashboardData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
-  const [showMetrics, setShowMetrics] = useState(false);  
-
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch('http://localhost:3000/api/compliance');
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const result = await response.json();
-
-
-        setData({
-          labels: ['Compliance Score', 'Controls Implemented', 'Pending Tasks'],
-          datasets: [
-            {
-              label: 'Compliance Metrics',
-              data: [result.complianceScore, result.controlsImplemented, result.pendingTasks],
-              backgroundColor: ['#4caf50', '#3e95cd', '#ff6384'],
-              hoverBackgroundColor: ['#388e3c', '#2e7d32', '#d32f2f'],
-            },
-          ],
-        });
-
-        setRiskAssessment(result.riskAssessment);
-        setSecurityMetrics(result.securityMetrics);
-
+        if (!response.ok) throw new Error('Network response was not ok');
+  
+        const result: DashboardData = await response.json();
+        setDashboardData(result);
         setLoading(false);
       } catch (err) {
-        setError(err as Error);
+        setError(err instanceof Error ? err : new Error('An unknown error occurred'));
         setLoading(false);
       }
     };
-
+  
     fetchData();
   }, []);
-
-  const updateData = async () => {
-    setLoading(true); 
-    try {
-      const response = await fetch('http://localhost:3000/api/compliance');
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const result = await response.json();
-
-
-      setData({
-        labels: ['Compliance Score', 'Controls Implemented', 'Pending Tasks'],
-        datasets: [
-          {
-            label: 'Updated Compliance Metrics',
-            data: [result.complianceScore, result.controlsImplemented, result.pendingTasks],
-            backgroundColor: ['#4caf50', '#3e95cd', '#ff6384'],
-            hoverBackgroundColor: ['#388e3c', '#2e7d32', '#d32f2f'],
-          },
-        ],
-      });
-
-      setRiskAssessment(result.riskAssessment);
-      setSecurityMetrics(result.securityMetrics);
-      setShowMetrics(true);  
-
-      setLoading(false);
-    } catch (err) {
-      setError(err as Error);
-      setLoading(false);
-    }
-  };
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
+  
+  if (loading) return <div className="loading">Loading...</div>;
+  if (error) return <div className="error">Error: {error.message}</div>;
+  if (!dashboardData) return <div className="no-data">No data available</div>;
 
   return (
-    <>
-      {/* Navbar with user icon */}
+    <div className="dashboard-container">
       <nav className="navbar">
-        <img src={Icon} alt="Logo" className="dashboard-logo" aria-label="Company Logo" />
+        <img src={Icon} alt="Company Logo" className="dashboard-logo" />
         <div className="navbar-right">
           <h1>Compliance Dashboard</h1>
-          <FontAwesomeIcon icon={faUser} className="user-icon" aria-label="User Icon" />
+          <FontAwesomeIcon icon={faUser} className="user-icon" aria-label="User profile" />
         </div>
       </nav>
       
-      <div className="dashboard">
-        <div className="dashboard-card">
-
-          {/* Chart Section */}
-          <h2 className="chart-heading">Compliance Metrics Overview</h2>
+      <main className="dashboard">
+        <section className="dashboard-card">
+          <h2>Compliance Status Overview</h2>
           <div className="chart-container">
-            <Bar data={data} options={{ responsive: true, maintainAspectRatio: false }} />
+            <ComplianceStatusChart data={[dashboardData.complianceScore, dashboardData.controlsImplemented, dashboardData.pendingTasks]} />
           </div>
+        </section>
 
-          {/* Conditionally display the metrics */}
-          {showMetrics && (
-            <section className="features">
-              <div className="feature" aria-label="Compliance Status Overview">
-                <h2>Compliance Status Overview</h2>
-                <p>Compliance Score: {data.datasets[0].data[0]}%</p>
-                <p>Controls Implemented: {data.datasets[0].data[1]}</p>
-                <p>Pending Tasks: {data.datasets[0].data[2]}</p>
-              </div>
+        <section className="dashboard-card">
+          <h2>Risk Assessment</h2>
+          <div className="chart-container">
+            <RiskAssessmentChart data={dashboardData.riskAssessment} />
+          </div>
+        </section>
 
-              <div className="feature" aria-label="Risk Assessment">
-                <h2>Risk Assessment</h2>
-                <p>Critical Risks: {riskAssessment.criticalRisks}</p>
-                <p>Risk Score: {riskAssessment.riskScore}</p>
-              </div>
+        <section className="dashboard-card">
+          <h2>Security Metrics</h2>
+          <div className="chart-container">
+            <SecurityMetricsChart data={dashboardData.securityMetrics} />
+          </div>
+        </section>
 
-              <div className="feature" aria-label="Security Metrics">
-                <h2>Security Metrics</h2>
-                <p>Incidents: {securityMetrics.incidents}</p>
-                <p>Average Resolution Time: {securityMetrics.avgResolutionTime}</p>
-                <p>Incident Trends - Last Month: {securityMetrics.trends.lastMonth}, This Month: {securityMetrics.trends.thisMonth}</p>
-              </div>
-            </section>
-          )}
+        <div className="dashboard-card">
+        <section className="content-section">
+            <Content title="Develop" description="Lorem ipsum dolor sit amet, consectetur adipiscing elit." />
+          </section>
 
-          {/* Button for Interaction */}
-          <button className="update-btn" onClick={updateData} aria-label="Update Compliance Metrics">
-            {showMetrics ? 'Update Metrics' : 'Show Metrics'}
-          </button>
+          <section className="content-section">
+            <Content title="Analysis" description="Lorem ipsum dolor sit amet, consectetur adipiscing elit." />
+          </section>
         </div>
-      </div>
-    </>
+      </main>
+    </div>
   );
 };
 
