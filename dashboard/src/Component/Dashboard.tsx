@@ -82,7 +82,8 @@ const Dashboard: React.FC = () => {
             <SecurityMetricsChart data={dashboardData.securityMetrics} />
           </div>
         </section>
-        <section className="dashboard-card">
+        <section className="dashboard-card-last">
+          <div className="responsive-flex">
           <div >
             <Content
               title="Develop"
@@ -98,6 +99,8 @@ const Dashboard: React.FC = () => {
               icon="chart"
             />
           </div>
+          </div>
+      
         </section>
 
       </main>
