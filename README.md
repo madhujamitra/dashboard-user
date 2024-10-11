@@ -81,7 +81,7 @@ Before you begin, ensure you have the following installed:
 
 ## Screenshots
 
-![Compliance Dashboard](./dashboard/src/assets/Screenshot%202024-10-10%20at%203.14.24 PM.png)
-![Compliance Dashboard](./dashboard/src/assets/Screenshot%202024-10-10%20at%203.14.58 PM.png)
-![Compliance Dashboard](./dashboard/src/assets/Screenshot%202024-10-10%20at%203.15.13 PM.png)
+![Compliance Dashboard](./dashboard/src/assets/screen1.png)
+![Compliance Dashboard](./dashboard/src/assets/screen2.png)
+![Compliance Dashboard](./dashboard/src/assets/screen3.png)
 
