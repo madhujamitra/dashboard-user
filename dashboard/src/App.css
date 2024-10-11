@@ -16,7 +16,7 @@
   width: 100%;
   max-width: 400px;
   padding: 20px;
-  border: 1px solid #274653;
+  border: 1px solid rgba(95, 95, 95, 0.1);
   display: flex;
   flex-direction: column;
   margin-bottom: 50px;
@@ -37,7 +37,7 @@ body, h1, h2, h3, h4, p, a, li, label {
   align-items: center;
   padding: 20px;
   background-color: #ffffff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(98, 98, 98, 0.1);
   border-radius: 15px;
   margin-bottom: 20px;
   width: 100%;
@@ -70,7 +70,7 @@ h1 {
   width: 100%;
   max-width: 400px;
   background-color: white;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(95, 95, 95, 0.1);
   border-radius: 10px;
   padding: 20px;
 }
